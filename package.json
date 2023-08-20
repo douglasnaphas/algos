@@ -1,7 +1,7 @@
 {
-  "name": "rhombus",
+  "name": "algos",
   "version": "1.0.0",
-  "description": "Various calculations related to rhombi on grids.",
+  "description": "Algorithms.",
   "main": "index.js",
   "scripts": {
     "test": "jest"

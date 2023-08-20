@@ -1,54 +1,22 @@
-const maxSideLenN = (m, n, r, c) => {
-  // for len s, you need:
-
-  // room to the left
-  // c - (s - 1) >= 0
-  // c - s + 1 >= 0
-  // s <= c + 1
-
-  // room to the right
-  // c + (s - 1) <= n - 1
-  // c + s <= n
-  // s <= n - c
-
-  // room below
-  // r + 2 * (s - 1) <= m - 1
-  // 2 * (s - 1) <= m - 1 - r
-  // 2s - 2 <= m - 1 - r
-  // 2s <= m + 1 - r
-  // s <= ceil((m - r + 1) / 2)
-
-  return Math.min(c + 1, n - c, Math.floor((m - r + 1) / 2));
-};
-
-const sideSum = (grid, R, C, r, c) => {
-  const sideSums = {};
-  const sideSumWMemo = (R, C, r, c) => {
-    if (sideSums[`${R}#${C}#${r}#${c}`]) {
-      // console.log(`returning sideSums[${R}#${C}#${r}#${c}]`)
-      return sideSums[`${R}#${C}#${r}#${c}`];
-    }
+const bubbleColumn = (v, bottom) => {
+  const bubble = (v, bottom) => {
     // base case
-    if (R === r && C === c) {
-      sideSums[`${R}#${C}#${r}#${c}`] = grid[R][C];
-      return grid[R][C];
+    if (bottom === 0) {
+      return;
     }
-    // recursive case
-    const goWest = c > C;
-    const goEast = !goWest;
-    if (goWest) {
-      sideSums[`${R}#${C}#${r}#${c}`] =
-        grid[r][c] + sideSumWMemo(R, C, r - 1, c - 1);
-      return sideSums[`${R}#${C}#${r}#${c}`];
+
+    if (v[bottom] === 0) {
+      // bubble
+      v[bottom] = v[bottom - 1];
+      v[bottom - 1] = 0;
     }
-    if (goEast) {
-      console.log("going east")
-      sideSums[`${R}#${C}#${r}#${c}`] =
-        grid[r][c] + sideSumWMemo(R, C, r - 1, c + 1);
-      return sideSums[`${R}#${C}#${r}#${c}`];
-    }
+
+    bubbleColumn(v, bottom - 1);
   };
-  return sideSumWMemo(R, C, r, c);
+  const zeros = v.reduce((acc, curr) => (curr === 0 ? acc + 1 : acc), 0);
+  for (let i = 0; i < zeros; i++) {
+    bubble(v, bottom);
+  }
 };
 
-module.exports = { maxSideLenN, sideSum };
+module.exports = { bubbleColumn };
