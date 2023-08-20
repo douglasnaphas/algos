@@ -1,4 +1,4 @@
-const bubbleColumn = (v, bottom) => {
+const bubbleColumn = (v) => {
   const bubble = (v, bottom) => {
     // base case
     if (bottom === 0) {
