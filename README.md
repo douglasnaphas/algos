@@ -1,2 +1,2 @@
-# rhombus
-Calculations related to rhombi on grids.
+# algos
+Algorithm helpers, tests, experiments, and scratch work.
